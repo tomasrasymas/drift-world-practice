@@ -18,7 +18,7 @@ export const CARS = [
       'Near 50/50 balance and a long wheelbase make it slow to rotate and easy to hold. Wait for the boost.',
     powerHp: 550,
     colors: [
-      { name: 'Super White', hex: 0xf2f2ee },
+      { name: 'Super White', hex: 0xd2d2ce },
       { name: 'Solar Orange', hex: 0xf06a12 },
       { name: 'Renaissance Red', hex: 0xb5121b },
       { name: 'Quicksilver', hex: 0x9aa0a6 },
@@ -116,7 +116,7 @@ export const CARS = [
       { name: 'GT Silver', hex: 0xa9adb0 },
       { name: 'Guards Red', hex: 0xc0121a },
       { name: 'Racing Yellow', hex: 0xf2c400 },
-      { name: 'White', hex: 0xf4f4f2 },
+      { name: 'White', hex: 0xd3d3d0 },
     ],
 
     mass: 1510,
@@ -206,7 +206,7 @@ export const CARS = [
       { name: 'Rosso Corsa', hex: 0xc40d12 },
       { name: 'Giallo Modena', hex: 0xf6c700 },
       { name: 'Nero', hex: 0x0b0b0d },
-      { name: 'Bianco Avus', hex: 0xf3f3f1 },
+      { name: 'Bianco Avus', hex: 0xd3d3d0 },
       { name: 'Blu Corsa', hex: 0x1450a8 },
     ],
 

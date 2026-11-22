@@ -44,8 +44,8 @@ export function createDocks({ renderer }) {
   const sky = makeSky({ top: 0x2a66c8, horizon: 0xb9d3ea, bottom: 0x8497a6, sunDir, sunColor: 0xfff3d8, sunSize: 0.0012, sunGlow: 0.5 });
   group.add(sky);
   const env = envFromSky(renderer, sky, 0x77736c);
-  group.add(new THREE.HemisphereLight(0xcfe0ff, 0x7b7468, 1.0));
-  const sun = new THREE.DirectionalLight(0xfff1dc, 3.1);
+  group.add(new THREE.HemisphereLight(0xcfe0ff, 0x7b7468, 0.85));
+  const sun = new THREE.DirectionalLight(0xfff1dc, 2.7);
   group.add(sun, sun.target);
 
   // ---- apron
@@ -355,7 +355,7 @@ export function createDocks({ renderer }) {
     night: false,
     fog: new THREE.Fog(0xc0d3e4, 260, 1500),
     exposure: 0.92,
-    bloom: { strength: 0.12, radius: 0.4, threshold: 1.0 },
+    bloom: { strength: 0.1, radius: 0.4, threshold: 2.2 },
     smokeColor: 0xe9ebee,
     yOffset: 0,
     spawn: { x: -78, z: -48, yaw: Math.PI / 2 },

@@ -71,7 +71,7 @@ function facade(seed, style) {
     map: tex(c),
     emissiveMap: tex(e),
     emissive: 0xffffff,
-    emissiveIntensity: 1.1,
+    emissiveIntensity: 1.45,
     roughness: 0.75,
     metalness: 0.1,
   });
@@ -401,7 +401,7 @@ export function createCity({ renderer }) {
     night: true,
     fog: new THREE.FogExp2(0x090b17, 0.0042),
     exposure: 1.05,
-    bloom: { strength: 0.6, radius: 0.55, threshold: 1.0 },
+    bloom: { strength: 0.55, radius: 0.55, threshold: 1.25 },
     smokeColor: 0x9aa3b5,
     yOffset: 0,
     spawn: { x: 0.5 * PITCH + 4.5, z: -RING + 30, yaw: 0 },

@@ -14,7 +14,7 @@ export class Showroom {
     this.env = pm.fromScene(new RoomEnvironment(), 0.03).texture;
     pm.dispose();
     this.scene.environment = this.env;
-    this.scene.environmentIntensity = 0.32;
+    this.scene.environmentIntensity = 0.28;
 
     this.camera = new THREE.PerspectiveCamera(34, window.innerWidth / window.innerHeight, 0.1, 100);
 
@@ -50,7 +50,7 @@ export class Showroom {
     glow.position.y = 0.02;
     this.scene.add(glow);
 
-    const key = new THREE.SpotLight(0xffffff, 250, 30, 0.6, 0.6, 1.6);
+    const key = new THREE.SpotLight(0xffffff, 165, 30, 0.6, 0.6, 1.6);
     key.position.set(4, 9, 5);
     key.castShadow = true;
     key.shadow.mapSize.set(2048, 2048);
@@ -61,7 +61,7 @@ export class Showroom {
     rimA.position.set(-6, 2.2, -5);
     const rimB = new THREE.PointLight(0x2de2ff, 22, 22, 1.6);
     rimB.position.set(6, 2.2, -6);
-    this.scene.add(rimA, rimB, new THREE.HemisphereLight(0x8090c0, 0x101014, 0.5));
+    this.scene.add(rimA, rimB, new THREE.HemisphereLight(0x8090c0, 0x101014, 0.35));
 
     this.turntable = new THREE.Group();
     this.scene.add(this.turntable);

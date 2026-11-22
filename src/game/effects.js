@@ -130,7 +130,7 @@ export class Smoke {
         void main() {
           vec4 mv = modelViewMatrix * vec4(position, 1.0);
           gl_Position = projectionMatrix * mv;
-          gl_PointSize = min(900.0, aData.x * uScale / max(0.5, -mv.z));
+          gl_PointSize = min(520.0, aData.x * uScale / max(0.5, -mv.z));
           vAlpha = aData.y;
         }`,
       fragmentShader: /* glsl */ `
@@ -164,8 +164,8 @@ export class Smoke {
       this.vel[i * 3 + 2] = vz + (Math.random() - 0.5) * 1.6;
       this.age[i] = 0;
       this.life[i] = 1.5 + Math.random() * 1.6;
-      this.peak[i] = (0.1 + Math.random() * 0.12) * strength;
-      this.grow[i] = 1.6 + Math.random() * 1.4;
+      this.peak[i] = (0.055 + Math.random() * 0.07) * strength;
+      this.grow[i] = 1.3 + Math.random() * 1.1;
       this.data[i * 2] = 0.7;
       this.data[i * 2 + 1] = 0;
     }

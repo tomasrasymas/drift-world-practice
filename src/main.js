@@ -17,7 +17,7 @@ import { Showroom } from './ui/showroom.js';
 import { Menu } from './ui/menu.js';
 
 const $ = (id) => document.getElementById(id);
-const MENU_LOOK = { exposure: 0.95, bloom: { strength: 0.4, radius: 0.6, threshold: 1.25 } };
+const MENU_LOOK = { exposure: 0.95, bloom: { strength: 0.4, radius: 0.6, threshold: 1.7 } };
 
 class App {
   constructor() {

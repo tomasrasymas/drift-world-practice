@@ -233,7 +233,7 @@ export class Game {
           this.skid.update(i, w.wx, gy, w.wz, cosY, -sinY, half, kind === 2 ? inten * 0.35 : inten);
           if (inten > 0.08) {
             const fling = clamp((w.omega * w.R - w.vx) * 0.22, -5, 5);
-            this.smoke.emit(i, inten * (kind === 2 ? 22 : w.front ? 45 : 85), dt, w.wx, gy, w.wz, car.vx * 0.3 - sinY * fling, 0, car.vz * 0.3 - cosY * fling, kind === 2 ? 0.5 : 1);
+            this.smoke.emit(i, inten * (kind === 2 ? 22 : w.front ? 45 : 85) * clamp(0.3 + car.speed / 14, 0.3, 1), dt, w.wx, gy, w.wz, car.vx * 0.3 - sinY * fling, 0, car.vz * 0.3 - cosY * fling, kind === 2 ? 0.5 : 1);
           }
         }
       }

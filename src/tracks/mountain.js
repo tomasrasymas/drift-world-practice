@@ -334,7 +334,7 @@ export function createMountain({ renderer }) {
     night: false,
     fog: new THREE.FogExp2(0xdfb48f, 0.00105),
     exposure: 0.95,
-    bloom: { strength: 0.28, radius: 0.7, threshold: 0.95 },
+    bloom: { strength: 0.22, radius: 0.7, threshold: 2.0 },
     smokeColor: 0xf0e2d2,
     yOffset: LIFT,
     spawn: { x: P.x[16] - leftX(16) * 2.6, z: P.z[16] - leftZ(16) * 2.6, yaw: Math.atan2(P.tx[16], P.tz[16]) },
