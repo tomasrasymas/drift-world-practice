@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Drift World — Practice</title>
+    <meta name="description" content="Drift practice in the browser: a Supra, a 911 GT3 and an F8 Tributo on a physically modelled chassis, across a night city, a mountain pass and a harbour terminal." />
+    <meta name="theme-color" content="#07080d" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2307080d'/%3E%3Cpath d='M12 44c10-22 26-28 40-26' fill='none' stroke='%23ff3df2' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M16 52c10-18 22-22 34-20' fill='none' stroke='%232de2ff' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <canvas id="view"></canvas>
+
+    <div id="menu" class="screen">
+      <header class="brand">
+        <span class="jp">ドリフト</span>
+        <h1>Drift World</h1>
+        <span class="sub">Practice</span>
+      </header>
+
+      <section class="panel left">
+        <h2><i>01</i>Car</h2>
+        <div id="car-list" class="cards"></div>
+        <div id="car-detail"></div>
+      </section>
+
+      <section class="panel right">
+        <h2><i>02</i>Location</h2>
+        <div id="track-list" class="cards"></div>
+        <h2><i>03</i>Setup</h2>
+        <div class="row">
+          <label>Transmission</label>
+          <div class="seg" id="trans-seg">
+            <button data-v="auto">Automatic</button>
+            <button data-v="manual">Manual</button>
+          </div>
+        </div>
+        <div class="row">
+          <label>Countersteer assist</label>
+          <div class="seg" id="assist-seg">
+            <button data-v="1">On</button>
+            <button data-v="0">Off</button>
+          </div>
+        </div>
+        <p class="hint" id="setup-hint"></p>
+      </section>
+
+      <footer class="start-bar">
+        <ul class="keys">
+          <li><kbd>↑</kbd> Throttle</li>
+          <li><kbd>↓</kbd> Brake / reverse</li>
+          <li><kbd>←</kbd><kbd>→</kbd> Steer</li>
+          <li><kbd>Space</kbd> Handbrake</li>
+          <li><kbd>E</kbd> Gear up</li>
+          <li><kbd>W</kbd> Gear down</li>
+        </ul>
+        <button id="start-btn">Start drifting <kbd>Enter</kbd></button>
+      </footer>
+    </div>
+
+    <div id="hud" class="hidden">
+      <div class="hud-score">
+        <div class="label">Score</div>
+        <div class="value" id="score-total">0</div>
+        <div class="small">Best <span id="score-best">0</span></div>
+      </div>
+      <div class="hud-drift" id="drift-panel">
+        <div class="angle" id="drift-angle">0°</div>
+        <div class="points" id="drift-points">0</div>
+        <div class="mult" id="drift-mult">×1.0</div>
+      </div>
+      <div id="toast" class="toast"></div>
+      <div class="hud-tags">
+        <span id="car-label"></span>
+        <span id="trans-label">AUTO</span>
+        <span id="cam-label"></span>
+        <span id="hb-label">HANDBRAKE</span>
+      </div>
+      <canvas id="minimap" width="220" height="220"></canvas>
+      <canvas id="tach" width="440" height="440"></canvas>
+      <div id="help">
+        <span><kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Drive</span>
+        <span><kbd>Space</kbd> Handbrake</span>
+        <span class="manual-only"><kbd>E</kbd> Up <kbd>W</kbd> Down</span>
+        <span><kbd>R</kbd> Reset</span>
+        <span><kbd>C</kbd> Camera</span>
+        <span><kbd>M</kbd> Mute</span>
+        <span><kbd>H</kbd> Hide</span>
+        <span><kbd>Esc</kbd> Pause</span>
+      </div>
+    </div>
+
+    <div id="pause" class="overlay hidden">
+      <div class="pause-box">
+        <h2>Paused</h2>
+        <button id="resume-btn">Resume <kbd>Esc</kbd></button>
+        <button id="restart-btn">Restart</button>
+        <button id="garage-btn">Back to garage</button>
+      </div>
+    </div>
+
+    <div id="loading" class="overlay hidden">
+      <div class="loading-text"><span id="loading-name"></span><small>Loading</small></div>
+    </div>
+
+    <div id="fatal" class="overlay hidden"><div class="pause-box"><h2>WebGL unavailable</h2><p>This game needs a browser with WebGL 2 and hardware acceleration enabled.</p></div></div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

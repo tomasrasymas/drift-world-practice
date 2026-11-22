@@ -1,0 +1,20 @@
+{
+  "name": "drift-world-practice",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Browser drift practice game with a custom vehicle dynamics model",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test:physics": "node scripts/physics-test.mjs"
+  },
+  "dependencies": {
+    "@fontsource/saira-condensed": "^5.3.0",
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "vite": "^8.3.8"
+  }
+}
