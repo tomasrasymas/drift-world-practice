@@ -20,7 +20,8 @@ const AIR = 1.225;
 const V_LOW = 1.0; // slip denominator floor, m/s
 const RELAX_LEN = 0.28; // lateral relaxation length, m
 const RPM = 30 / Math.PI;
-const STEER_LEAD = 0.14; // s of slip-angle lead in the countersteer assist
+const STEER_LEAD = 0.14; // s of slip-angle lead with the steering assist on
+const STEER_LEAD_BASE = 0.05; // and with it off: just enough that letting go gathers the car up
 
 const FL = 0;
 const FR = 1;
@@ -356,18 +357,21 @@ export class Vehicle {
     const s = this.spec;
     const lock = s.steerLock;
     // Direction the front axle is actually travelling, in the body frame.
-    // Letting the wheels follow it is what a driver does when the wheel is
-    // allowed to spin through the hands in a slide (caster self-steer).
+    // The wheels follow it whether or not the assist is on: that is caster,
+    // the same self-aligning pull that spins a real steering wheel back
+    // through the driver's hands in a slide. Steering input is then an
+    // offset from that direction, so full countersteer is always available.
     let travel = 0;
     if (u > 1.5) {
-      const fade = smooth01((u - 1.5) / 4) * this.steerAssist;
+      const fade = smooth01((u - 1.5) / 4);
       const beta = Math.atan2(v, u);
-      // slip-angle rate, lightly filtered: the anticipation a driver adds on
-      // top of simply following the slide
+      // Slip-angle rate, lightly filtered. The assist adds it as lead: the
+      // anticipation a skilled driver supplies on top of following the slide.
       const raw = clamp((beta - this._betaPrev) / dt, -6, 6);
       this._betaRate += (raw - this._betaRate) * Math.min(1, dt * 30);
       this._betaPrev = beta;
-      travel = (Math.atan2(v + r * this.a, u) + this._betaRate * STEER_LEAD) * fade;
+      const lead = STEER_LEAD_BASE + (STEER_LEAD - STEER_LEAD_BASE) * this.steerAssist;
+      travel = (Math.atan2(v + r * this.a, u) + this._betaRate * lead) * fade;
     } else {
       this._betaPrev = 0;
       this._betaRate = 0;
@@ -375,7 +379,8 @@ export class Vehicle {
     const range = lerp(lock, s.steerHighSpeed, smooth01((speed - 3) / 15));
     // With the assist on, steering further into a slide loses authority as
     // the angle builds, so a held key settles at a big angle instead of
-    // spinning the car. Countersteer is never limited.
+    // spinning the car. With it off that is the driver's job. Countersteer
+    // is never limited.
     let gain = 1;
     if (this.steerAssist > 0 && u > 3) {
       const beta = Math.atan2(v, u);

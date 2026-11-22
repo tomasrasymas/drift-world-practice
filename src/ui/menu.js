@@ -121,10 +121,14 @@ export class Menu {
         <span class="color-name">${s.colors[sel.colorIndex].name}</span>
       </div>`;
 
-    $('setup-hint').textContent =
+    const gearbox =
       sel.transmission === 'manual'
         ? 'Sequential shift with E (up) and W (down). The clutch is automatic and opens while the handbrake is pulled.'
         : 'The gearbox holds a gear while the car is sliding. Hold ↓ at a standstill to select reverse.';
+    const assist = sel.assist
+      ? 'Assist on: the steering anticipates the slide and holding a key settles at a big angle instead of spinning.'
+      : 'Assist off: the wheel still self-centres toward the direction of travel, but holding the steering or the throttle too long will spin the car.';
+    $('setup-hint').innerHTML = `${gearbox}<br><br>${assist}`;
     this.onChange(sel);
   }
 

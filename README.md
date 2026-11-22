@@ -47,7 +47,7 @@ The vehicle model lives in `src/physics` and runs at a fixed 1000 Hz.
 
 `npm run test:physics` runs the model headlessly and prints 0–100 km/h, braking distance, skidpad grip and whether a slide can be held, for each car.
 
-The countersteer assist is a driver aid on the steering only: it does not change tyre grip or add forces. Turn it off in the menu for unassisted steering.
+Steering always self-centres toward the direction of travel, as a real wheel does through caster, and the keys steer relative to that, so full countersteer is available at any speed. The countersteer assist adds two things on top: it anticipates the slide, and it stops a held key from winding the car past a large angle. It acts on the steering only and does not change tyre grip or add forces. With it off, releasing the steering in time and feathering the throttle are up to you.
 
 ## Development
 

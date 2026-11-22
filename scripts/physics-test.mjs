@@ -104,6 +104,49 @@ for (const spec of CARS) {
     }
   }
 
+  // assist off: a keyboard driver who watches how fast the car is rotating
+  // and reacts a little late, like a person would
+  for (const [gear, kmh] of [[2, 70], [3, 110]]) {
+    const car = new Vehicle(spec, { transmission: 'manual', steerAssist: 0 });
+    const v0 = kmh / 3.6;
+    car.vz = v0; for (const w of car.wheels) w.omega = v0 / w.R; car.gear = gear;
+    let inDrift = 0, total = 0, steerK = 0, thrK = 0, prevBeta = 0, maxBeta = 0, rateF = 0;
+    const delay = []; // 150 ms reaction time
+    const log = [];
+    run(car, 14, (c, t) => {
+      const beta = -c.driftAngle * 57.3;
+      rateF += ((beta - prevBeta) / DT - rateF) * DT * 20; prevBeta = beta;
+      delay.push(beta + rateF * 0.3);
+      const seen = delay.length > 150 ? delay.shift() : 0;
+      c.input.handbrake = 0;
+      let st, th;
+      if (t < 0.4) { st = 0; th = 1; }
+      else if (t < 0.9) { st = 1; th = 1; c.input.handbrake = t > 0.45 && t < 0.75 ? 1 : 0; }
+      else {
+        st = seen < 24 ? 1 : seen > 40 ? -1 : 0;
+        th = seen > 46 ? 0 : seen > 36 ? (Math.floor(t * 8) % 2 ? 1 : 0) : 1;
+      }
+      steerK += Math.max(-DT * 7.5, Math.min(DT * 5, st - steerK));
+      thrK += Math.max(-DT * 9, Math.min(DT * 5.5, th - thrK));
+      c.input.steer = steerK; c.input.accel = thrK;
+    }, (c, t) => {
+      if (t > 1.5) { total++; if (Math.abs(c.driftAngle) > 0.26 && c.speedKmh > 30) inDrift++; maxBeta = Math.max(maxBeta, Math.abs(c.driftAngle * 57.3)); }
+      if (Math.round(t * 1000) % 1000 === 0 && t > 0.5) log.push(`${f(t, 0)}s β=${f(-c.driftAngle * 57.3, 0)}° v=${f(c.speedKmh, 0)} st=${f(c.steer * 57.3, 0)}°`);
+    });
+    console.log(`assist OFF, human keys g${gear} @${kmh}: sliding ${f(100 * inDrift / total, 0)}%  max β ${f(maxBeta, 0)}°` + (process.env.VERBOSE ? '\n  ' + log.join('\n  ') : ''));
+  }
+  {
+    const car = new Vehicle(spec, { transmission: 'manual', steerAssist: 0 });
+    const v0 = 80 / 3.6;
+    car.vz = v0; for (const w of car.wheels) w.omega = v0 / w.R; car.gear = 2;
+    let maxB = 0, endB = 0;
+    run(car, 6, (c, t) => {
+      c.input.accel = t < 1.4 ? 1 : 0; c.input.steer = t > 0.4 && t < 0.95 ? 1 : 0;
+      c.input.handbrake = t > 0.5 && t < 0.85 ? 1 : 0;
+    }, (c) => { maxB = Math.max(maxB, Math.abs(c.driftAngle * 57.3)); endB = c.driftAngle * 57.3; });
+    console.log(`assist OFF, hands-off recovery: peak β ${f(maxB, 0)}°, after 6s β ${f(endB, 0)}° v=${f(car.speedKmh, 0)}`);
+  }
+
   // let go mid-slide: the car should gather itself up, not spin
   {
     const car = new Vehicle(spec, { transmission: 'manual' });
